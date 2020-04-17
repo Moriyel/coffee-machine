@@ -1,0 +1,47 @@
+.coffee-machine {
+  border: 2px solid black; /*рамка всей кофемашины*/
+  margin-top: 75px;
+}
+
+.coffee-list {
+  background-image: url('img/background.jpg');
+  background-size: cover; 
+}
+.coffee-item {
+  background: rgba(0, 0, 0, 0.7);
+  margin: 15px 0;
+  border-radius: calc(75px / 2);
+  cursor: pointer;
+}
+.coffee-item:hover {
+  background: rgba(50, 50, 50, 0.7);
+}
+.coffee-item img {
+  width: 75px;
+  height: 75px;
+  background: white;
+  border-radius: 50%;
+}
+.coffee-item span {
+  color: white;
+  margin-left: 15 px;
+}
+.display {
+  background: lightgreen;
+  border: 2px solid darkgreen;
+  padding: 15px;
+}
+.coffee-cup img {
+  width: 100%;
+}
+.atm img {
+  width: 100%;
+}
+.change-box {
+  border: 2px solid black;
+  background: darkgrey;
+  height: 100px;
+}
+.coffee-oper {
+  background: lightgrey;
+}
