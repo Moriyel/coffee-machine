@@ -67,10 +67,15 @@
         </div> <!--coffee-oper - операции(действия) - правая часть-->
       </div>
     </div>
-
+      <div class="bills">
+        <img src="img/50rub.jpg" alt="">
+        <img src="img/100rub.jpg" alt="">
+        <img src="img/500rub.jpg" alt="">
+      </div>
+      
     <!-- Optional JavaScript -->
     <script src="coffee.js"></script>
-    <script src="coffee.js"></script>
+  
     
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
