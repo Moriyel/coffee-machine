@@ -50,16 +50,16 @@
             <div class="col-6">
               <!--Здесь баланс копировали с бутстрап-->
               <div class="input-group mb-3">
-               <input type="text" class="form-control" placeholder="Баланс" aria-label="Имя получателя" aria-describedby="basic-addon2">
+               <input type="text" class="form-control" placeholder="Баланс" aria-label="Имя получателя" aria-describedby="basic-addon2" readonly>
                 <div class="input-group-append">
                   <span class="input-group-text" id="basic-addon2">&#8381 руб.
-                  </span>
+                  </span> 
                 </div>
               </div>
               <div class="atm">
                 <img src="img/bill_acc.png" alt="">
               </div>
-              <button class = "btn btn-primary btn-block mt-3">Сдача
+              <button class = "btn btn-primary btn-block mt-3 change-btn">Сдача
               </button>
               <div class="change-box mt-3"></div>
             </div>
@@ -68,9 +68,9 @@
       </div>
     </div>
       <div class="bills">
-        <img src="img/50rub.jpg" alt="">
-        <img src="img/100rub.jpg" alt="">
-        <img src="img/500rub.jpg" alt="">
+        <img src="img/50rub.jpg" alt="" cost="50">
+        <img src="img/100rub.jpg" alt="" cost="100">
+        <img src="img/500rub.jpg" alt="" cost="500">
       </div>
       
     <!-- Optional JavaScript -->

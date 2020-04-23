@@ -5,20 +5,25 @@ let state = 'waiting';
 
 let cupImg = document.querySelector('.coffee-cup img');
 let progressBar = document.querySelector('.progress-bar');
+let balanceInput = document.querySelector('input[placeholder="Баланс"]');
+
 cupImg.onclick = takeCoffee;
 
 function buyCoffee(name, price, element) {
   //console.log([name, prise, element]);
+  
   if (state != 'waiting') {
     return; //прекратит действие 
   }
-  let balanceInput = document.querySelector('input[placeholder="Баланс"]');
+  
+  //let balanceInput = document.querySelector('input[placeholder="Баланс"]'); вынесли в глобал
+  
   if (+balanceInput.value < price) {
     changeDisplayText("Недостаточно средств");
     balanceInput.style.border = "2px solid red";
   } else {
     balanceInput.value -= price;
-    balanceInput.style.border = ""; //уберет наш стиль если денег не хватает
+    balanceInput.style.border = ""; //уберет наш стиль если денег хватает
     state = "cooking"; //не даст заказать новую чашку
     cookCoffee(name, element);
   }
@@ -70,14 +75,14 @@ function changeDisplayText(text) {
 
 
 let bills = document.querySelectorAll(".bills img");//найти все купюры
-for (let i=0; i < bills.length; i++) {//повесить событие на все купюры
+for (let i=0; i < bills.length; i++) {//повесить событие на все купюры - bills это массив.length это длина массива 
     bills[i].onmousedown = takeMoney; /*  bills[i].onmousedown = function (event) {
     takeMoney(event); //можно через функцию обертку
     }*/
 }
 
 function takeMoney(event) {//запись ранозначная функции обертке в onmousedown = takeMoney
- event.preventDefault();
+ event.preventDefault(); //убирает призрачность
  let bill = event.target;
  
  bill.style.position = "absolute";
@@ -98,9 +103,14 @@ function takeMoney(event) {//запись ранозначная функции 
   bill.style.top = event.clientY - billWidth/2 + "px"; 
  bill.style.left = event.clientX - billHeight/2 + "px";
  }
+ 
  bill.onmouseup = function() {
    window.onmousemove = null;//сбросили значения
-   console.log( inAtm(bill) );
+   if ( inAtm(bill) ) {
+     let billCost = +bill.getAttribute("cost");
+     balanceInput.value = +balanceInput.value + billCost;
+     bill.remove(); //этод метод ремув на всегда удаляет элемент
+   } 
  }
  function inAtm(bill) {
    let atm = document.querySelector('.atm img');
@@ -129,6 +139,58 @@ function takeMoney(event) {//запись ранозначная функции 
  }
  
 }
+
+//------Сдача-------
+//Прибавили в html атрибут cost, когда нужны данные html можем прибавить атрибут к html b с помощью getAttribute его вызвать
+//вызвали событи и привязали его к элементу let changeButton = document.querySelector(".change-btn");
+let changeButton = document.querySelector(".change-btn");
+/*changeButton.onclick = funktion () {
+  takeChange();
+}*/
+changeButton.onclick = takeChange;
+
+function takeChange() {
+  /*let changeBox = document.querySelector(".change-box");
+  changeBox.innerHTML += `
+  <img src="img/10rub.png">`;*/
+  tossCoin("10"); //чтоб не захломлять вынесли takeChange в отдельную функцию эта функция которая вываливает нам монетки в наш див
+  
+}
+function tossCoin(cost) {
+  let changeBox = document.querySelector(".change-box");
+  changeBox.style.position = "relative"; //нам дас позицию только в этом блоке (элементе)
+  let changeBoxCoords = changeBox.getBoundingClientRect(); //метод который определяет координаты
+  let randomWidth = getRandomInt(0, changeBoxCoords.width - 50); //получаем случайные координаты чтоб они вывалмвались в этот бокс и ограничели их ширину монеты накладываьются друг на друга
+  let randomHeight = getRandomInt(0, changeBoxCoords.height - 50);//получаем случайные координаты чтоб они вывалмвались в этот бокс и ограничели их высоту
+  console.log(randomWidth, randomHeight);
+  
+/*Альтернативный костыль.
+Вместо changeBox.append(coin); можно добавлять в document.body.append(coin).
+Тогда позиционирование работает нормально.*/
+  
+  let coin = document.createElement("img"); //создает элемент в вакууме и нам его нужно прицепить (если нужен див то див если спан то спан и т д)
+  coin.setAttribute('src', 'img/10rub.png');//настраиваем элемент обращаемся к пути монетки
+  coin.style.width = "50px";//меняем размер картинки монетки
+  coin.style.height = "50px";//меняем размер картинки монетки
+  
+  coin.style.position = "absolute";//меняем позицию от края родительского элемента
+  coin.style.top = randomHeight + 'px'; //на рандомной высоте
+  coin.style.left = randomWidth + 'px';//на рандомной ширине
+  
+  changeBox.append(coin);//крепим элемент внутрь в конец родительского элемента
+ // changeBox.prepend(coin); //крепим элемент внутрь в начало родительского элемента
+  //changeBox.before(coin);//перед элементом вне элемента
+  //changeBox.after(coin);//после элемента вне элемента
+  //changeBox.replaceWith(coin); //заменит наш changeBox на монетку
+  
+}
+
+function getRandomInt(min, max) { //взяли функцию из mozila developer
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //Максимум не включается, минимум включается
+}
+
 
 
 
